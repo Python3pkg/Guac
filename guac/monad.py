@@ -1,4 +1,5 @@
 import abc, copy, inspect
+import collections
 
 class Monad(metaclass=abc.ABCMeta):  
     """An abstract class whose subclasses represent monad instances."""
@@ -104,7 +105,7 @@ def monadic(instance):
             
     if issubclass(instance, Monad):
         return lambda f: wrap(f, monad=instance)
-    elif not callable(instance):
+    elif not isinstance(instance, collections.Callable):
         raise TypeError('expected instance of Monad')
     
     # We weren't given an instance; return an unspecialized wrapper.
